@@ -5,6 +5,7 @@ import scipy as sp
 import copy
 from scipy.spatial import distance_matrix
 
+
 def similarity_constraint(A, F, k):
     z = F.shape[1]
     n = A.shape[0]
@@ -15,6 +16,7 @@ def similarity_constraint(A, F, k):
         R[i, :][R[i, :].argsort()[0:n - k]] = 0
         R[:, i][R[:, i].argsort()[0:n - k]] = 0
     return R
+
 
 def nullspace(At, rcond=None):
     """A = At.numpy()
@@ -31,34 +33,6 @@ def nullspace(At, rcond=None):
     ns = vht[numt:,:].T.conj()
     return ns
 
-def compute_F(sensitive):
-    """
-    :param groups: (num_nodes,) Vector indicating protected group memberships
-    :return F: Group_fairness constraint matrix as in Kleindesnner
-    """
-    n = len(sensitive)
-    # converting sensitive to a vector with entries in [h] and building F
-    sens_unique = np.unique(sensitive)
-    h = len(sens_unique)
-    #sens_unique = reshape(sens_unique, [1, h]);
-
-    sensitiveNEW = copy.deepcopy(sensitive)
-
-    temp = 0;
-    for i in sens_unique:
-        ind = np.where(np.isin(sensitive, i))
-        sensitiveNEW[ind] = temp
-        temp = temp + 1;
-
-    F = np.zeros((n, h - 1));
-
-    for ell in range(h - 1):
-        temp = np.where(np.isin(sensitiveNEW, ell))
-        F[temp[0], ell] = 1;
-        groupSize = len(temp[0]);
-        F[:, ell] = F[:, ell] - groupSize/n;
-
-    return F
 
 def compute_R0(sensitive):
     """
@@ -75,8 +49,8 @@ def compute_R0(sensitive):
     diag = np.eye((n))
 
     R = similarity_matrix - diag
-
     return R
+
 
 def compute_RS(sensitive):
     """
@@ -94,8 +68,8 @@ def compute_RS(sensitive):
 
     R = similarity_matrix - diag
     R_normal = R/R.sum(axis=1, keepdims=True)
-
     return R_normal
+
 
 def compute_RD(sensitive):
     """
@@ -113,14 +87,15 @@ def compute_RD(sensitive):
 
     #R = similarity_matrix - diag
     R_normal = R/R.sum(axis=1, keepdims=True)
-
     return R_normal
+
 
 def svd_init(Adj, k):
     #H = torch.rand(n, k, dtype=torch.float)
     u, s, v = torch.svd(Adj)
     W = torch.diag(s[:k] + torch.tensor(0.1))
     return W
+
 
 def joint_Laplacian(groups):
     """
