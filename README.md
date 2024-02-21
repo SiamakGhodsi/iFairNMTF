@@ -10,7 +10,9 @@ Please cite our paper if you use our material and/or source codes: [Towards Cohe
 
 @article{ghodsi2024towards,
   title={Towards Cohesion-Fairness Harmony: Contrastive Regularization in Individual Fair Graph Clustering},
-  author={Ghodsi, Siamak and Seyedi, Seyed Amjad and Ntoutsi, Eirini},
+  author={Ghodsi, Siamak and 
+  Seyedi, Seyed Amjad and 
+  Ntoutsi, Eirini},
   journal={arXiv preprint arXiv:2402.10756},
   year={2024}
 }
