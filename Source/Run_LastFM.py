@@ -69,7 +69,7 @@ tt=[]
 for num_c in k:
     for lam in lambdas:
         iter = 500
-        num_repeats = 3
+        num_repeats = 10
 
         Q_iter, B_iter= ([] for i in range(2))
         for param in range(num_repeats):
