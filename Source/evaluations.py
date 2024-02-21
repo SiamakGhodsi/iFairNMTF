@@ -4,23 +4,6 @@ import torch.nn.functional as F
 import torch
 import math
 
-def IGDC(a: np.ndarray, b:np.ndarray, s: str):
-    igdc = 0
-    if a.ndim == 1:
-        igdc = math.dist(a, b)
-    else:
-        a = a.transpose()
-        if (s=='avg'):
-            cumul = 0
-            for j in a:
-                cumul+= math.dist(j,b)
-            igdc = cumul/np.shape(a)[0]
-        elif(s=='min'):
-            dis = []
-            for j in a:
-                dis.append(math.dist(j,b))
-            igdc = min(dis)
-    return igdc
 
 def get_membership_matrix(indices: np.ndarray) -> np.ndarray:
     """
@@ -66,41 +49,6 @@ def compute_group_balance(clusters: np.ndarray, groups: np.ndarray, normalize: b
     return balances, balances.mean()
 
 
-def compute_individual_balance(clusters: np.ndarray, fair_mat: np.ndarray, normalize: bool = False) -> \
-        (np.ndarray, float):
-    """
-    :param clusters: (num_nodes,) Predicted clusters
-    :param fair_mat: (num_nodes, num_nodes) Fairness graph under which balance must be computed
-    :param normalize: Whether to normalize balance using cluster sizes
-    :return balances: (num_nodes,) Balance for each individual
-    :return avg_balance: Average balance of the individuals
-    """
-
-    # Get memberships
-    cluster_memberships = get_membership_matrix(clusters)
-    num_clusters = cluster_memberships.shape[1]
-    num_nodes = fair_mat.shape[0]
-
-    # Compute cluster sizes
-    cluster_sizes = cluster_memberships.sum(axis=0).reshape((-1,))
-
-    # Compute balance
-    counts = np.matmul(fair_mat, cluster_memberships)
-    balances = np.zeros((num_nodes,))
-    for i in range(num_nodes):
-        balance = float('inf')
-        for c1 in range(num_clusters):
-            for c2 in range(num_clusters):
-                curr_balance = counts[i, c1] / (1e-6 + counts[i, c2])
-                if normalize:
-                    curr_balance = curr_balance * (cluster_sizes[c2] / (1e-6 + cluster_sizes[c1]))
-                if curr_balance < balance:
-                    balance = curr_balance
-        balances[i] = balance
-
-    return balances, balances.mean()
-
-
 def reflow_clusters0(clusters: np.ndarray):
     """
     :param clusters: (num_nodes,) Cluster assignment
@@ -117,6 +65,7 @@ def reflow_clusters0(clusters: np.ndarray):
         reflow[i] = id_map[clusters[i]]
     return reflow
     
+
 def reflow_clusters(y):
     
     y=torch.tensor(y).type(torch.long)
@@ -125,7 +74,6 @@ def reflow_clusters(y):
     idx = torch.unique(y, sorted=False).type(torch.long)
     reflow = torch.argmax(oh[:,idx],dim=1)
     return reflow
-    
 
 
 def align_clusters(true_clusters: np.ndarray, pred_clusters: np.ndarray) -> (int, np.ndarray, np.ndarray):
@@ -180,34 +128,3 @@ def lab2com(y):
     eths = torch.unique(y)
     coms = [set(torch.where(y == eths[i])[0].cpu().numpy()) for i in range(eths.shape[0])]
     return coms
-
-def modularity_density(adj, c, dict_vec=None):
-    """Determines modularity_density of a set of communities using a metric
-        that is free from bias and faster to compute.
-        Parameters
-        ----------
-        adj : SciPy sparse matrix (csr or csc)
-            The N x N Adjacency matrix of the graph of interest.
-        c : Integer array
-            Current array of community labels for the nodes in the graph as ordered
-            by the adjacency matrix.
-        dict_vec : dictionary, optional
-            Tracks the nodes in each community, with cluster labels as dictionary-
-            keys, and the corresponding boolean arrays (c == label) as values.
-        Returns
-        -------
-        float
-            Determines modularity_density of a set of communities
-            in 'cluster_labels'.
-        ------
-        Modularity density in [1] is given as
-        .. math::
-           Q = \sum_{c \in C}\Bigg\{\frac{\sum_{i,j \in c}T_{ij}}{n_c}  - \sum_{c^{\prime} \in C-c}\Bigg( \frac{\sum_{{i \in c,}{j \in c^{\prime}}}T_{ij}}{\sqrt{n_c n_{c^{\prime}}}}\Bigg)\Bigg\}
-           where:
-           - each cluster ${c \in C}$ is represented by an indicator vector ${\vec{v}_c = [v{_{c_i}}] \in {\R}^{|V|} : v{_{c_i}}= 1}$ if ${i \in c}$, else $0$
-           - \hat{n}_c = \frac{\vec{v}_c}{|\vec{v}_c|}
-        References
-        ----------
-        .. [1] MULA S, VELTRI G. A new measure of modularity density for
-               community detection. arXiv:1908.08452 2019.
-        """
