@@ -5,8 +5,8 @@ This repository contains supplementary material of the iFairNMTF model. This mod
 
 This repository includes the pdf supplement of the paper, source codes, datasets and evaluation metrics required to reproduce our results. 
 
-```
 # Cite us as
+```
 Please cite our paper if you use our material and/or source codes: [Towards Cohesion-Fairness Harmony: Contrastive Regularization in Individual Fair Graph Clustering](https://arxiv.org/pdf/2402.10756.pdf)
 
 @article{DBLP:journals/corr/abs-2402-10756,
