@@ -5,14 +5,24 @@ This repository contains supplementary material of the iFairNMTF model. This mod
 
 This repository includes the pdf supplement of the paper, source codes, datasets and evaluation metrics required to reproduce our results. 
 
-
+```
+# Cite us as
 Please cite our paper if you use our material and/or source codes: [Towards Cohesion-Fairness Harmony: Contrastive Regularization in Individual Fair Graph Clustering](https://arxiv.org/pdf/2402.10756.pdf)
 
-@article{ghodsi2024towards,
-  title={Towards Cohesion-Fairness Harmony: Contrastive Regularization in Individual Fair Graph Clustering},
-  author={Ghodsi, Siamak and 
-  Seyedi, Seyed Amjad and 
-  Ntoutsi, Eirini},
-  journal={arXiv preprint arXiv:2402.10756},
-  year={2024}
+@article{DBLP:journals/corr/abs-2402-10756,
+  author       = {Siamak Ghodsi and
+                  Seyed Amjad Seyedi and
+                  Eirini Ntoutsi},
+  title        = {Towards Cohesion-Fairness Harmony: Contrastive Regularization in Individual
+                  Fair Graph Clustering},
+  journal      = {CoRR},
+  volume       = {abs/2402.10756},
+  year         = {2024},
+  url          = {https://doi.org/10.48550/arXiv.2402.10756},
+  doi          = {10.48550/ARXIV.2402.10756},
+  eprinttype    = {arXiv},
+  eprint       = {2402.10756},
+  timestamp    = {Mon, 26 Feb 2024 16:52:48 +0100},
+  biburl       = {https://dblp.org/rec/journals/corr/abs-2402-10756.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
