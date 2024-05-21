@@ -1,7 +1,7 @@
 # iFairNMTF
-individual Fair Nonnegative Matrix Tri-Factorization 
+[individual Fair Nonnegative Matrix Tri-Factorization](https://arxiv.org/pdf/2402.10756)
 
-This repository contains supplementary material on the iFairNMTF model. This model incorporates individual fairness within (unsupervised) graph clustering through a contrastive learning regularization all-in-all, represented as a Nonnegative Matrix Tri-Factorization (NMTF) framework. Our contribution is the first research work introducing fairness into NMF. This paper has been presented in the research track of [PAKDD 2024](https://pakdd2024.org/detail-program-2/#May8-2A) conference. In our paper entitled "Towards Cohesion-Fairness Harmony: Contrastive Regularization in Individual Fair Graph Clustering", we also investigate the implications of the real-world challenge of the clustering-fairness trade-off and provide a practical solution to this problem. 
+This repository contains supplementary material on the iFairNMTF model. This model incorporates individual fairness within (unsupervised) graph clustering through a contrastive learning regularization all-in-all, represented as a Nonnegative Matrix Tri-Factorization (NMTF) framework. Our contribution is the first research work introducing fairness into NMF. This paper has been presented in the research track of [PAKDD 2024](https://link.springer.com/chapter/10.1007/978-981-97-2242-6_23) conference. In our paper entitled "Towards Cohesion-Fairness Harmony: Contrastive Regularization in Individual Fair Graph Clustering", we also investigate the implications of the real-world challenge of the clustering-fairness trade-off and provide a practical solution to this problem. 
 
 This repository consists of two directories: 1) Supplement: which includes the pdf supplement of our paper, and slides presented at the PAKDD 2024 conference. 2) main repository: including source codes, datasets, and evaluation metrics required to reproduce our results.
 
